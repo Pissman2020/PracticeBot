@@ -13,7 +13,7 @@ public class MyListener extends ListenerAdapter {
 	{
 		try
 		{
-			JDA jda = JDABuilder.createDefault("ODc2OTU0NDY4NTg1OTk2Mjg5.YRrlfg.DJTrCJKpIQ3H1DM82MF5R5BoyC8")
+			JDA jda = JDABuilder.createDefault("TOKEN")
 					.addEventListeners(new MyListener())
 					.build();
 			jda.awaitReady();
