@@ -78,9 +78,6 @@ public class MyListener extends ListenerAdapter {
             System.out.printf("[PRIV]<%s>: %s\n", author.getName(), msg);
         }
         
-        if(msg.equals("!"))
-        {
-        	
-        }
+        
 	}
 }
