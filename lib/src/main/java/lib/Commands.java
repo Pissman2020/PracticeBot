@@ -20,39 +20,31 @@ public class Commands extends ListenerAdapter {
 		
 		String[] args = event.getMessage().getContentRaw().split("\\s");
 		
-		try {
 			
-			if (args[0].equalsIgnoreCase(prefix + "time")) {
-				if (args[1].matches("\\b\\d{1,2}:\\d{2}\\b")) {
-					if (args[1].length() == 5) {		
-						String timeAsString = args[1];
-						time = LocalTime.parse(timeAsString);
-					} else if (args[1].length() == 4) {
-						String timeAsString = "0" + args[1];
-						time = LocalTime.parse(timeAsString);
-					} else if (args[1].length() > 4) {
-						event.getChannel().sendMessage(errorMessage).queue();
-					} else if (args[1].length() < 5) {
-						event.getChannel().sendMessage(errorMessage).queue();
-					}
-					
-			 		LocalDateTime ldt = time.atDate(LocalDate.parse("2021-01-01"));
-			 		Instant timeInstant = ldt.atZone(ZoneId.systemDefault()).toInstant();
-			 		long timeAsLong = timeInstant.getEpochSecond();
-			 		timeAsEpoch = String.valueOf(timeAsLong);
-					
-					event.getChannel().sendMessage("<t:" + timeAsEpoch + ":t>").queue();
-				
-				} else {
-					event.getChannel().sendMessage(errorMessage).queue();				
+		if (args[0].equalsIgnoreCase(prefix + "time")) {
+			if (args[1].matches("\\b\\d{1,2}:\\d{2}\\b")) {
+				if (args[1].length() == 5) {		
+					String timeAsString = args[1];
+					time = LocalTime.parse(timeAsString);
+				} else if (args[1].length() == 4) {
+					String timeAsString = "0" + args[1];
+					time = LocalTime.parse(timeAsString);
+				} else if (args[1].length() > 4) {
+					event.getChannel().sendMessage(errorMessage).queue();
+				} else if (args[1].length() < 5) {
+					event.getChannel().sendMessage(errorMessage).queue();
 				}
+					
+		 		LocalDateTime ldt = time.atDate(LocalDate.parse("2021-01-01"));
+		 		Instant timeInstant = ldt.atZone(ZoneId.systemDefault()).toInstant();
+		 		long timeAsLong = timeInstant.getEpochSecond();
+		 		timeAsEpoch = String.valueOf(timeAsLong);
+					
+				event.getChannel().sendMessage("<t:" + timeAsEpoch + ":t>").queue();
+				
+			} else {
+				event.getChannel().sendMessage(errorMessage).queue();				
 			}
-		} catch (ArrayIndexOutOfBoundsException e) {
-			event.getChannel().sendMessage(errorMessage).queue();
 		}
-	}
-	
-	
-	
-	
+	}	
 }

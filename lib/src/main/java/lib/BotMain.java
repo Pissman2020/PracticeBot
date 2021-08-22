@@ -7,8 +7,10 @@ import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
 import java.time.ZoneId;
+import java.time.zone.ZoneRulesProvider;
 import java.util.Properties;
 import java.util.Set;
+import java.util.TimeZone;
 
 import javax.security.auth.login.LoginException;
 
@@ -46,9 +48,9 @@ public class BotMain extends ListenerAdapter {
 // 		long timeAsLong = timeInstant.getEpochSecond();
 // 		String timeAsEpoch = String.valueOf(timeAsLong);
 // 		System.out.println(timeAsEpoch);
- 		Set<String> zones = ZoneId.getAvailableZoneIds();
+ 		Set<String> zones = ZoneRulesProvider.getAvailableZoneIds();
  		System.out.println(zones.toString());
- 		
+ 	
 	}
 	
 	@Override
