@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneId;
+import java.time.zone.ZoneRulesException;
 import java.util.HashMap;
 
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
@@ -19,8 +20,33 @@ public class Commands extends ListenerAdapter {
 		
 		//!time command
 		HashMap<String, String> aliasMap = new HashMap<>();
+		aliasMap.put("ECT", "Europe/Monaco");
+		aliasMap.put("ART", "Egypt");
+		aliasMap.put("EAT", "Africa/Asmara");
+		aliasMap.put("MET", "Iran");
+		aliasMap.put("NET", "Asia/Baku");
+		aliasMap.put("PLT", "Asia/Ashgabat");
+		aliasMap.put("IST", "Asia/Calcutta");
+		aliasMap.put("BST", "Asia/Bishkek");
+		aliasMap.put("VST", "Asia/Saigon");
+		aliasMap.put("CTT", "Asia/Hong_Kong");
+		aliasMap.put("JST", "Asia/Tokyo");
+		aliasMap.put("ACT", "Australia/South");
+		aliasMap.put("AET", "Australia/Melbourne");
+		aliasMap.put("SST", "Pacific/Norfolk");
+		aliasMap.put("NST", "Pacific/Auckland");
+		aliasMap.put("MIT", "Pacific/Samoa");
+		aliasMap.put("AST", "America/Sitka");
+		aliasMap.put("PST", "America/Vancouver");
+		aliasMap.put("PNT", "America/Phoenix");
+		aliasMap.put("MST", "America/Denver");
         aliasMap.put("EST", "America/New_York");
-        aliasMap.put("CST", "America/Chicago");
+        aliasMap.put("CST", "America/Winnipeg");
+        aliasMap.put("PRT", "America/Puerto_Rico");
+        aliasMap.put("CNT", "Canada/Newfoundland");
+        aliasMap.put("AGT", "America/Argentina/Cordoba");
+        aliasMap.put("BET", "Brazil/DeNoronha");
+        aliasMap.put("CAT", "Atlantic/Cape_Verde");
 		
 		if (args[0].equalsIgnoreCase(prefix + "time")) {
 			
@@ -42,8 +68,13 @@ public class Commands extends ListenerAdapter {
 				}
 				
 				String zone = args[2].toUpperCase();
-				ZoneId zoneId = ZoneId.of(zone, aliasMap);
-				System.out.println(zoneId);
+				ZoneId zoneId = null;
+				
+				try {
+					zoneId = ZoneId.of(zone);
+				} catch (ZoneRulesException e) {
+					zoneId = ZoneId.of(zone, aliasMap);
+				}
 				
 //				try {
 //					zoneId = ZoneId.of(zone);
@@ -66,7 +97,7 @@ public class Commands extends ListenerAdapter {
 					
 					event.getChannel().sendMessage("<t:" + timeAsEpoch + ":t>").queue();
 				} else {
-					event.getChannel().sendMessage(errorMessage).queue();
+					event.getChannel().sendMessage(zone + " is not a supported timezone. List of supported timezones: https://ibm.co/3sEd5BW").queue();
 				}
 				
 			} else {
