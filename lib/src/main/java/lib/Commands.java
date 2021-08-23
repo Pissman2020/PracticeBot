@@ -5,7 +5,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneId;
-import java.time.zone.ZoneRulesException;
 import java.util.HashMap;
 
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
@@ -46,29 +45,29 @@ public class Commands extends ListenerAdapter {
 				ZoneId zoneId = ZoneId.of(zone, aliasMap);
 				System.out.println(zoneId);
 				
-				try {
-					zoneId = ZoneId.of(zone);
-					LocalDateTime ldt = time.atDate(LocalDate.parse("2021-01-01"));
-					Instant timeInstant = ldt.atZone(zoneId).toInstant();
-					long timeAsLong = timeInstant.getEpochSecond();
-					timeAsEpoch = String.valueOf(timeAsLong);
-					
-					event.getChannel().sendMessage("<t:" + timeAsEpoch + ":t>").queue();
-
-				} catch (ZoneRulesException e) {
-				event.getChannel().sendMessage(zone + " is not a supported timezone.").queue();
-				}
-				
-//				if (zoneId instanceof ZoneId) {
+//				try {
+//					zoneId = ZoneId.of(zone);
 //					LocalDateTime ldt = time.atDate(LocalDate.parse("2021-01-01"));
 //					Instant timeInstant = ldt.atZone(zoneId).toInstant();
 //					long timeAsLong = timeInstant.getEpochSecond();
 //					timeAsEpoch = String.valueOf(timeAsLong);
 //					
 //					event.getChannel().sendMessage("<t:" + timeAsEpoch + ":t>").queue();
-//				} else {
-//					event.getChannel().sendMessage(errorMessage).queue();
+//
+//				} catch (ZoneRulesException e) {
+//				event.getChannel().sendMessage(zone + " is not a supported timezone.").queue();
 //				}
+				
+				if (zoneId instanceof ZoneId) {
+					LocalDateTime ldt = time.atDate(LocalDate.parse("2021-01-01"));
+					Instant timeInstant = ldt.atZone(zoneId).toInstant();
+					long timeAsLong = timeInstant.getEpochSecond();
+					timeAsEpoch = String.valueOf(timeAsLong);
+					
+					event.getChannel().sendMessage("<t:" + timeAsEpoch + ":t>").queue();
+				} else {
+					event.getChannel().sendMessage(errorMessage).queue();
+				}
 				
 			} else {
 				event.getChannel().sendMessage(errorMessage).queue();				
