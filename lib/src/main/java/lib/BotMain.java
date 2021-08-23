@@ -7,10 +7,8 @@ import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
 import java.time.ZoneId;
-import java.time.zone.ZoneRulesProvider;
+import java.util.HashMap;
 import java.util.Properties;
-import java.util.Set;
-import java.util.TimeZone;
 
 import javax.security.auth.login.LoginException;
 
@@ -42,14 +40,19 @@ public class BotMain extends ListenerAdapter {
 		}
 		
  		//Section of just fucking around to find how to get a unix timecode from a time
-// 		LocalTime lt = LocalTime.parse("18:00");
-// 		LocalDateTime ldt = lt.atDate(LocalDate.parse("2021-01-01"));
-// 		Instant timeInstant = ldt.atZone(ZoneId.systemDefault()).toInstant();
-// 		long timeAsLong = timeInstant.getEpochSecond();
-// 		String timeAsEpoch = String.valueOf(timeAsLong);
-// 		System.out.println(timeAsEpoch);
- 		Set<String> zones = ZoneRulesProvider.getAvailableZoneIds();
- 		System.out.println(zones.toString());
+ 		//LocalTime lt = LocalTime.parse("18:00");
+ 		//LocalDateTime ldt = lt.atDate(LocalDate.parse("2021-01-01"));
+ 		//Instant timeInstant = ldt.atZone(ZoneId.systemDefault()).toInstant();
+ 		//long timeAsLong = timeInstant.getEpochSecond();
+ 		//String timeAsEpoch = String.valueOf(timeAsLong);
+ 		//System.out.println(timeAsEpoch);
+ 		//Set<String> zones = ZoneRulesProvider.getAvailableZoneIds();
+ 		//System.out.println(zones.toString());
+ 		
+ 		//HashMap<String, String> aliasMap = new HashMap<>();
+        //aliasMap.put("EST", "America/New_York");
+        //ZoneId zoneId = ZoneId.of("EST", aliasMap);
+        //System.out.println(zoneId);
  	
 	}
 	
