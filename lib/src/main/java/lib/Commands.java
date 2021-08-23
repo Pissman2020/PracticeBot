@@ -47,11 +47,12 @@ public class Commands extends ListenerAdapter {
         aliasMap.put("AGT", "America/Argentina/Cordoba");
         aliasMap.put("BET", "Brazil/DeNoronha");
         aliasMap.put("CAT", "Atlantic/Cape_Verde");
+        aliasMap.put("IET", "America/New_York");
 		
 		if (args[0].equalsIgnoreCase(prefix + "time")) {
 			
 			LocalTime time = null;
-			String timeAsEpoch;
+			String timeAsEpoch = null;
 			String errorMessage = "Command !time requires a time in 24 hour format and timezone. e.g. `!time 17:00 EST`";
 			
 			if (args[1].matches("\\b\\d{1,2}:\\d{2}\\b")) {
@@ -72,32 +73,22 @@ public class Commands extends ListenerAdapter {
 				
 				try {
 					zoneId = ZoneId.of(zone);
-				} catch (ZoneRulesException e) {
-					zoneId = ZoneId.of(zone, aliasMap);
-				}
-				
-//				try {
-//					zoneId = ZoneId.of(zone);
-//					LocalDateTime ldt = time.atDate(LocalDate.parse("2021-01-01"));
-//					Instant timeInstant = ldt.atZone(zoneId).toInstant();
-//					long timeAsLong = timeInstant.getEpochSecond();
-//					timeAsEpoch = String.valueOf(timeAsLong);
-//					
-//					event.getChannel().sendMessage("<t:" + timeAsEpoch + ":t>").queue();
-//
-//				} catch (ZoneRulesException e) {
-//				event.getChannel().sendMessage(zone + " is not a supported timezone.").queue();
-//				}
-				
-				if (zoneId instanceof ZoneId) {
 					LocalDateTime ldt = time.atDate(LocalDate.parse("2021-01-01"));
 					Instant timeInstant = ldt.atZone(zoneId).toInstant();
 					long timeAsLong = timeInstant.getEpochSecond();
 					timeAsEpoch = String.valueOf(timeAsLong);
-					
 					event.getChannel().sendMessage("<t:" + timeAsEpoch + ":t>").queue();
-				} else {
-					event.getChannel().sendMessage(zone + " is not a supported timezone. List of supported timezones: https://ibm.co/3sEd5BW").queue();
+				} catch (ZoneRulesException e) {
+					try {
+						zoneId = ZoneId.of(zone, aliasMap);
+						LocalDateTime ldt = time.atDate(LocalDate.parse("2021-01-01"));
+						Instant timeInstant = ldt.atZone(zoneId).toInstant();
+						long timeAsLong = timeInstant.getEpochSecond();
+						timeAsEpoch = String.valueOf(timeAsLong);
+						event.getChannel().sendMessage("<t:" + timeAsEpoch + ":t>").queue();
+					} catch (ZoneRulesException f) {
+						event.getChannel().sendMessage(zone + " is not a supported timezone. List of supported timezones: https://ibm.co/3sEd5BW").queue();
+					}
 				}
 				
 			} else {
