@@ -36,6 +36,9 @@ public class BotMain extends ListenerAdapter {
 		{
 			e.printStackTrace();
 		}
+ 		
+ 		//Fucking around testing shit section
+ 		
  	
 	}
 	
