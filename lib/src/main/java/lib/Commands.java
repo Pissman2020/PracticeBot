@@ -117,8 +117,8 @@ public class Commands extends ListenerAdapter {
 			} catch (IndexOutOfBoundsException e) {
 			}
 			
-			List<Member> members = guild.getMembersWithRoles(role);
-			event.getChannel().sendMessage(members.get(0).toString()).queue();
+			List<Member> members = guild.getMembersWithRoles(roles);
+			System.out.println(members);
 			
 		}
 		
